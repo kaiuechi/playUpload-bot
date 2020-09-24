@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 
-ffmpeg_exe_loc = "/ffmpeg/ffmpeg-2020-09-20-git-ef29e5bf42-full_build/shorter_name/bin/ffmpeg.exe"
+ffmpeg_exe_loc = "/ffmpeg.exe"
 role_restrict = "commandrestrict"
 accepted_file_ext = [".mp3", ".wav", ".mp4"]
 

@@ -14,7 +14,7 @@ async def on_ready():
     print("ready!")
 
 #load all cogs in /cogs/
-cogdir = path.dirname(__file__) + "\cogs\\"
+cogdir = path.dirname(__file__) + "/cogs/"
 print(cogdir)
 for filename in os.listdir(cogdir):
     print(f"found file: {filename}")
@@ -23,4 +23,4 @@ for filename in os.listdir(cogdir):
         print(f"loading {filename}")
         bot.load_extension(f"cogs.{filename}")
 
-bot.run('NzU2NTcyODM1MTE1MzAzMDY0.X2TzXA.vsVj6Krkgknkb5po428kdRKMnFY')
+bot.run('token')

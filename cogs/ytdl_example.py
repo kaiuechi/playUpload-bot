@@ -6,7 +6,7 @@ from discord.ext import commands
 # Suppress noise about console usage from errors
 youtube_dl.utils.bug_reports_message = lambda: ''
 
-ffmpeg_exe_loc = "/ffmpeg/ffmpeg-2020-09-20-git-ef29e5bf42-full_build/shorter_name/bin/ffmpeg.exe"
+ffmpeg_exe_loc = "ffmpeg.exe"
 
 ytdl_format_options = {
     'format': 'bestaudio/best',
@@ -50,10 +50,10 @@ class YTDLSource(discord.PCMVolumeTransformer):
         print(f"downloading {filename}")
         return cls(discord.FFmpegPCMAudio(filename, **ffmpeg_options, executable=ffmpeg_exe_loc), data=data)
         
-class ytdl_test(commands.Cog):
+class ytdl_example(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        print("loaded ytdl_test")
+        print("loaded ytdl_example")
 
     @commands.command()
     async def join(self, ctx, *, channel: discord.VoiceChannel):
@@ -126,4 +126,4 @@ class ytdl_test(commands.Cog):
 
 
 def setup(bot):
-    bot.add_cog(ytdl_test(bot))
+    bot.add_cog(ytdl_example(bot))
