@@ -10,6 +10,14 @@ bot = commands.Bot(command_prefix = 'mj.')
 @bot.event
 async def on_ready():
     print("ready!")
+    
+@bot.command()
+async def unloadCog(ctx, extName):
+        bot.unload_extension(f"cogs.{extName}")
+
+@bot.command()
+async def loadCog(ctx, extName):
+        bot.load_extension(f"cogs.{extName}")
 
 #load all cogs in /cogs/
 cogdir = "./cogs/"
