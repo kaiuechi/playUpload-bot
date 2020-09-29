@@ -1,6 +1,8 @@
 
 .idea/*
 .DS_Store
+ffmpeg.exe
+.vs/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -127,3 +129,4 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+cogs/ytdl_example.py

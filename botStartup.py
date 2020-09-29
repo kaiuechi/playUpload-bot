@@ -1,21 +1,24 @@
 import os
 from os import path
 import sys
-import youtube_dl
 import discord
 from discord.ext import commands
 
-bot = commands.Bot(command_prefix = 'mj.')
+import config
+
+bot = commands.Bot(command_prefix = config.BOT_COMMAND_PREFIX)
 
 @bot.event
 async def on_ready():
     print("ready!")
     
 @bot.command()
+@commands.has_role(config.ROLE_RESTRICT_COG)
 async def unloadCog(ctx, extName):
         bot.unload_extension(f"cogs.{extName}")
 
 @bot.command()
+@commands.has_role(config.ROLE_RESTRICT_COG)
 async def loadCog(ctx, extName):
         bot.load_extension(f"cogs.{extName}")
 
@@ -28,4 +31,4 @@ for filename in os.listdir(cogdir):
         print(f"loading {filename}")
         bot.load_extension(f"cogs.{filename}")
 
-bot.run('token')
+bot.run(config.TOKEN)

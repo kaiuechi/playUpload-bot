@@ -3,10 +3,12 @@ import youtube_dl
 
 from discord.ext import commands
 
+import sys
+sys.path.append('../..')
+import config
+
 # Suppress noise about console usage from errors
 youtube_dl.utils.bug_reports_message = lambda: ''
-
-ffmpeg_exe_loc = "ffmpeg.exe"
 
 ytdl_format_options = {
     'format': 'bestaudio/best',
@@ -48,7 +50,7 @@ class YTDLSource(discord.PCMVolumeTransformer):
 
         filename = data['url'] if stream else ytdl.prepare_filename(data)
         print(f"downloading {filename}")
-        return cls(discord.FFmpegPCMAudio(filename, **ffmpeg_options, executable=ffmpeg_exe_loc), data=data)
+        return cls(discord.FFmpegPCMAudio(filename, **ffmpeg_options, executable=config.FFMPEG_EXE_LOC), data=data)
         
 class ytdl_example(commands.Cog):
     def __init__(self, bot):
@@ -70,7 +72,7 @@ class ytdl_example(commands.Cog):
         print(self)
         print(ctx)
         print(query)
-        source = discord.PCMVolumeTransformer(discord.FFmpegPCMAudio(query, executable=ffmpeg_exe_loc))
+        source = discord.PCMVolumeTransformer(discord.FFmpegPCMAudio(query, executable=config.FFMPEG_EXE_LOC))
         ctx.voice_client.play(source, after=lambda e: print('Player error: %s' % e) if e else None)
         
         await ctx.send('Now playing: {}'.format(query))

@@ -1,14 +1,13 @@
 import discord
 from discord.ext import commands
 
-ffmpeg_exe_loc = "/ffmpeg.exe"
-role_restrict = "commandrestrict"
-accepted_file_ext = [".mp3", ".wav", ".mp4"]
-
+import sys
+sys.path.append('../..')
+import config
 
 def check_file_ext(att_filename):
     fileValid = False
-    for fileExt in accepted_file_ext:
+    for fileExt in config.ACCEPTED_FILE_EXT:
         if att_filename.endswith(fileExt):
             fileValid = True
     return fileValid
@@ -17,9 +16,9 @@ class playUpload(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         print("loaded playUpload")
-        
+
     @commands.command()
-    @commands.has_role(role_restrict)
+    @commands.has_role(config.ROLE_RESTRICT)
     async def upload(self, ctx):
         
         print(f"playUpload- attachment {ctx.message.attachments} uploaded from {ctx.author}")
@@ -29,7 +28,7 @@ class playUpload(commands.Cog):
                 await attach.save(attach.filename)
                 
                 query = attach.filename
-                source = discord.PCMVolumeTransformer(discord.FFmpegPCMAudio(query, executable=ffmpeg_exe_loc))
+                source = discord.PCMVolumeTransformer(discord.FFmpegPCMAudio(query, executable= config.FFMPEG_EXE_LOC))
                 ctx.voice_client.play(source, after=lambda e: print('Player error: %s' % e) if e else None)
                 await ctx.send(f"playing file {attach.filename}")
                 print(f"playUpload- playing file {attach.filename}")
@@ -52,7 +51,7 @@ class playUpload(commands.Cog):
     @upload.error
     async def upload_error(self, ctx, error):
         if isinstance(error, commands.MissingRole):
-            await ctx.send(f"role {role_restrict} is required to run this command")
+            await ctx.send(f"role {config.ROLE_RESTRICT} is required to run this command")
 
 def setup(bot):
     bot.add_cog(playUpload(bot))
