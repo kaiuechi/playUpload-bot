@@ -20,15 +20,15 @@ class playUpload(commands.Cog):
     @commands.command()
     @commands.has_role(config.ROLE_RESTRICT)
     async def upload(self, ctx):
-        
+
         print(f"playUpload- attachment {ctx.message.attachments} uploaded from {ctx.author}")
         for attach in ctx.message.attachments:
-            if (check_file_ext(attach.filename)):
+            if check_file_ext(attach.filename):
                 print(f"playUpload- saving attachment {attach.filename}")
                 await attach.save(attach.filename)
-                
+
                 query = attach.filename
-                source = discord.PCMVolumeTransformer(discord.FFmpegPCMAudio(query, executable= config.FFMPEG_EXE_LOC))
+                source = discord.PCMVolumeTransformer(discord.FFmpegPCMAudio(query, executable=config.FFMPEG_EXE_LOC))
                 ctx.voice_client.play(source, after=lambda e: print('Player error: %s' % e) if e else None)
                 await ctx.send(f"playing file {attach.filename}")
                 print(f"playUpload- playing file {attach.filename}")
@@ -47,7 +47,7 @@ class playUpload(commands.Cog):
                 raise commands.CommandError("Author not connected to a voice channel.")
         elif ctx.voice_client.is_playing():
             ctx.voice_client.stop()
-    
+
     @upload.error
     async def upload_error(self, ctx, error):
         if isinstance(error, commands.MissingRole):
