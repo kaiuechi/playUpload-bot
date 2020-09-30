@@ -1,26 +1,24 @@
 import os
-from os import path
-import sys
 import discord
 from discord.ext import commands
 
 import config
 
-bot = commands.Bot(command_prefix = config.BOT_COMMAND_PREFIX)
+bot = commands.Bot(command_prefix=config.BOT_COMMAND_PREFIX)
 
 @bot.event
 async def on_ready():
     print("ready!")
-    
+
 @bot.command()
 @commands.has_role(config.ROLE_RESTRICT_COG)
 async def unloadCog(ctx, extName):
-        bot.unload_extension(f"cogs.{extName}")
+    bot.unload_extension(f"cogs.{extName}")
 
 @bot.command()
 @commands.has_role(config.ROLE_RESTRICT_COG)
 async def loadCog(ctx, extName):
-        bot.load_extension(f"cogs.{extName}")
+    bot.load_extension(f"cogs.{extName}")
 
 #load all cogs in /cogs/
 cogdir = "./cogs/"

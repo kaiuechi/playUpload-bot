@@ -51,7 +51,7 @@ class YTDLSource(discord.PCMVolumeTransformer):
         filename = data['url'] if stream else ytdl.prepare_filename(data)
         print(f"downloading {filename}")
         return cls(discord.FFmpegPCMAudio(filename, **ffmpeg_options, executable=config.FFMPEG_EXE_LOC), data=data)
-        
+
 class ytdl_example(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -74,7 +74,7 @@ class ytdl_example(commands.Cog):
         print(query)
         source = discord.PCMVolumeTransformer(discord.FFmpegPCMAudio(query, executable=config.FFMPEG_EXE_LOC))
         ctx.voice_client.play(source, after=lambda e: print('Player error: %s' % e) if e else None)
-        
+
         await ctx.send('Now playing: {}'.format(query))
 
     @commands.command()
